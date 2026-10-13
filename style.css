@@ -1,0 +1,202 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@400&family=Outfit:wght@400;500&display=swap");
+
+/* Colours and fonts */
+:root {
+  --color1: #3f2e11;
+  --color2: #dfd4b8;
+  --color3: #dfd4b840;
+  --color4: #dfd4b860;
+
+  --heading-font: "Fraunces", Georgia, serif;
+  --body-font: "Outfit", Arial, sans-serif;
+}
+
+/* Basic layout */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color1);
+  color: var(--color2);
+  font-family: var(--body-font);
+  line-height: 1.5;
+}
+
+main {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+h1 {
+  font-family: var(--heading-font);
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 28px;
+}
+
+/* Soundtrack panel */
+.soundtrack {
+  padding: 28px;
+  border: 1px solid var(--color3);
+  border-radius: 24px;
+}
+
+.interaction-note {
+  margin: 0 0 24px;
+  font-family: var(--body-font);
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0.7;
+}
+
+fieldset {
+  min-width: 0;
+  border: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+
+legend,
+label[for="intensity"] {
+  font-family: var(--heading-font);
+  font-size: 20px;
+  font-weight: 400;
+}
+
+legend {
+  padding: 0;
+  margin-bottom: 12px;
+}
+
+/* Sound buttons */
+.options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+button {
+  min-height: 46px;
+  padding: 14px;
+  background: transparent;
+  color: var(--color2);
+  border: 1px solid var(--color4);
+  border-radius: 24px;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: var(--color2);
+}
+
+button.selected,
+#play {
+  background: var(--color2);
+  color: var(--color1);
+}
+
+/* Leave space for the clip number. */
+.options button {
+  position: relative;
+  display: block;
+  min-height: 72px;
+  padding: 14px 16px 28px;
+  text-align: left;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.sound-name {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Place the clip number in the bottom-right corner. */
+.sound-number {
+  position: absolute;
+  right: 14px;
+  bottom: 9px;
+  font-family: var(--body-font);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0.65;
+}
+
+button.previewing {
+  outline: 2px solid var(--color2);
+  outline-offset: 3px;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--color2);
+  outline-offset: 4px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Intensity slider */
+#intensity-value {
+  margin-left: 12px;
+  font-family: var(--body-font);
+  font-size: 14px;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 16px 0 26px;
+  accent-color: var(--color2);
+  cursor: pointer;
+}
+
+/* Playback controls */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#status {
+  margin: 28px 0 6px;
+  font-family: var(--heading-font);
+  font-size: 16px;
+}
+
+#now-playing {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-size: 26px;
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+  main {
+    margin: 28px auto;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .soundtrack {
+    padding: 20px;
+  }
+
+  .options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #now-playing {
+    font-size: 23px;
+  }
+}

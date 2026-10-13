@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Reading Soundtrack</title>
+  <link rel="icon" type="image/x-icon" href="assets/icon/book.ico">
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
+</head>
+<body>
+  <main>
+    <h1>Dynamic Reading Soundtrack</h1>
+
+    <div class="soundtrack">
+        <p class="interaction-note">
+         Click to preview / Double-click for next sound
+      </p>
+      <fieldset>
+        <legend>Genre</legend>
+        <div class="options" id="genres">
+          <button class="selected">Fantasy</button>
+          <button>Mystery</button>
+          <button>Romance</button>
+          <button>Sci-Fi</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Atmosphere</legend>
+        <div class="options" id="atmospheres">
+          <button class="selected">Calm</button>
+          <button>Dark</button>
+          <button>Magical</button>
+          <button>Nostalgic</button>
+        </div>
+      </fieldset>
+
+      <label for="intensity">
+        Intensity <span id="intensity-value">50%</span>
+      </label>
+      <input id="intensity" type="range" min="0" max="100" value="50">
+
+      <div class="controls">
+        <button id="play">Start</button>
+        <button id="random">Random</button>
+        <button id="reset">Reset</button>
+      </div>
+
+      <p id="status">Now Playing</p>
+      <p id="now-playing">Fantasy + Calm</p>
+    </div>
+  </main>
+</body>
+</html>
