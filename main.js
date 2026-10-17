@@ -1,6 +1,7 @@
 // Get the controls and text elements from the HTML.
 const playButton = document.getElementById("play");
 const statusText = document.getElementById("status");
+const playIcon = document.getElementById("play-icon");
 const nowPlaying = document.getElementById("now-playing");
 const intensity = document.getElementById("intensity");
 
@@ -88,7 +89,7 @@ function updateDisplay() {
 
     // Show the current clip number inside the button.
     button.querySelector(".sound-number").textContent =
-      clips[name] + " / 4";
+        "Sound " + clips[name] + " / 4";
   });
 }
 
@@ -111,7 +112,9 @@ function stopSounds() {
 
   isPlaying = false;
   playButton.disabled = false;
-  playButton.textContent = "Start";
+  // Show the play icon when audio is paused.
+playIcon.src = "assets/icon/play.png";
+playButton.setAttribute("aria-label", "Play soundtrack");
 }
 
 // Play the genre and atmosphere together.
@@ -135,7 +138,9 @@ async function startSounds() {
     if (currentRequest !== request) return;
 
     isPlaying = true;
-    playButton.textContent = "Pause";
+    // Show the pause icon while audio is playing.
+playIcon.src = "assets/icon/pause.png";
+playButton.setAttribute("aria-label", "Pause soundtrack");
     statusText.textContent = "Now Playing";
   } catch {
     // Show an error only if this is still the current request.
@@ -219,7 +224,7 @@ function setupButtons(groupId, type) {
  // Show the sound name and current clip number.
 button.innerHTML =
   '<strong class="sound-name">' + name + "</strong>" +
-  '<span class="sound-number">' + clips[name] + " / 4</span>";
+  '<span class="sound-number">Sound ' + clips[name] + " / 4</span>";
 
     button.title =
       "Click to preview · Double-click for next sound";

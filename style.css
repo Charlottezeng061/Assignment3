@@ -192,13 +192,23 @@ button:disabled {
 }
 
 .intensity-control {
+  width: 100%;
   min-width: 0;
 }
 
+/* Give the intensity label less visual weight. */
 .intensity-control label {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  font-family: var(--body-font);
+  font-size: 14px;
+  font-weight: 400;
+}
+#intensity-value {
+  margin-left: 0;
+  font-family: var(--body-font);
+  font-size: 12px;
 }
 
 input[type="range"] {
@@ -280,12 +290,28 @@ main {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .player-controls {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
+}
+/* Keep the play and pause button the same size. */
+#play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
 
-  #now-playing {
-    font-size: 23px;
-  }
+#play-icon {
+  display: block;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: brightness(0);
+}
+
+/* Use a light icon on the dark button in day mode. */
+body.day-mode #play-icon {
+  filter: brightness(0) invert(1);
 }

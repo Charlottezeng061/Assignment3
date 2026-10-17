@@ -20,9 +20,10 @@
 </header>
 
     <div class="soundtrack">
-        <p class="interaction-note">
-         Click to preview / Double-click for next sound
-      </p>
+       <p class="interaction-note">
+  Click a sound to preview.
+  <strong>Double-click the same button to try its 4 sounds.</strong>
+</p>
       <fieldset>
         <legend>Genre</legend>
         <div class="options" id="genres">
@@ -53,7 +54,9 @@
      
 
       <div class="controls">
-        <button id="play">Start</button>
+        <button id="play" type="button" aria-label="Play soundtrack">
+  <img id="play-icon" src="assets/icon/play.png" alt="">
+</button>
         <button id="random">Random</button>
         <button id="reset">Reset</button>
       </div>
