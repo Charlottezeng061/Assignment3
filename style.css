@@ -63,9 +63,30 @@ h1 {
 }
 
 #theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  min-height: 48px;
+  padding: 10px;
+  border-radius: 50%;
   flex-shrink: 0;
-  padding: 10px 16px;
-  font-size: 13px;
+  margin-right: 28px;
+}
+
+/* Show a white icon on the dark background. */
+#theme-icon {
+  display: block;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+/* Show a black icon on the light background. */
+body.day-mode #theme-icon {
+  filter: brightness(0);
 }
 
 /* Soundtrack panel */
@@ -182,47 +203,74 @@ button:disabled {
   font-size: 14px;
 }
 
-/* Balance the slider and playback buttons. */
+/* Keep Play centred between two equal columns. */
 .player-controls {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) 56px minmax(0, 1fr);
   align-items: center;
-  gap: 32px;
-  margin-top: 8px;
+  gap: 24px;
+  margin-top: 12px;
 }
 
+.player-controls > #play {
+  justify-self: center;
+}
+
+/* Keep the volume controls in one row. */
 .intensity-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   width: 100%;
+  max-width: 240px;
   min-width: 0;
 }
 
-/* Give the intensity label less visual weight. */
-.intensity-control label {
+.controls {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  font-family: var(--body-font);
-  font-size: 14px;
-  font-weight: 400;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
 }
-#intensity-value {
-  margin-left: 0;
-  font-family: var(--body-font);
-  font-size: 12px;
+.volume-label {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
+.volume-label img {
+  display: block;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+/* Use a dark icon in day mode. */
+body.day-mode .volume-label img {
+  filter: brightness(0);
+}
+
+.intensity-control input[type="range"] {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+}
+
+#intensity-value {
+  flex-shrink: 0;
+  margin: 0;
+  font-family: var(--body-font);
+  font-size: 11px;
+}
 input[type="range"] {
   display: block;
   width: 100%;
   margin: 14px 0 0;
   accent-color: var(--color2);
   cursor: pointer;
-}
-
-.controls {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 10px;
 }
 
 .controls button {
@@ -244,8 +292,9 @@ input[type="range"] {
 
 #now-playing {
   margin: 0;
-  font-family: var(--heading-font);
+  font-family: var(--body-font);
   font-size: 26px;
+   font-weight: 500;
 }
 /* Limit both sections and keep space on each side. */
 .page-header,
@@ -274,10 +323,25 @@ main {
   margin-top: 0;
 }
 
-.controls {
-  flex-wrap: wrap;
+/* Stack the controls only on small screens. */
+.player-controls {
+  grid-template-columns: 1fr;
+  gap: 20px;
 }
 
+.player-controls > #play {
+  grid-row: 1;
+}
+
+.intensity-control {
+  grid-row: 2;
+  justify-self: center;
+}
+
+.controls {
+  grid-row: 3;
+  justify-content: center;
+}
   h1 {
     font-size: 32px;
   }
@@ -313,5 +377,58 @@ main {
 
 /* Use a light icon on the dark button in day mode. */
 body.day-mode #play-icon {
+  filter: brightness(0) invert(1);
+}
+
+#theme-toggle {
+  margin-right: 0;
+}
+
+/* Keep the repeat icon centred. */
+#repeat {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+#repeat img {
+  display: block;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+/* Repeat off: transparent background and light icon. */
+#repeat[aria-pressed="false"] {
+  background: transparent;
+  color: var(--color2);
+}
+
+#repeat[aria-pressed="false"] img {
+  filter: brightness(0) invert(1);
+}
+
+/* Repeat on: filled background and dark icon. */
+#repeat[aria-pressed="true"] {
+  background: var(--color2);
+  color: var(--color1);
+}
+
+#repeat[aria-pressed="true"] img {
+  filter: brightness(0);
+}
+
+/* Reverse icon colours in day mode. */
+body.day-mode #repeat[aria-pressed="false"] img {
+  filter: brightness(0);
+}
+
+body.day-mode #repeat[aria-pressed="true"] img {
   filter: brightness(0) invert(1);
 }

@@ -389,13 +389,46 @@ updateDisplay();
 setIntensity();
 
 const themeButton = document.getElementById("theme-toggle");
+const themeIcon = document.getElementById("theme-icon");
 
-// Switch between day and night colours.
-// This does not change the audio or selected sounds.
+// Change the theme and show the icon for the next mode.
 themeButton.addEventListener("click", function () {
   const isDayMode = document.body.classList.toggle("day-mode");
 
-  // Show the mode the user can switch to next.
-  themeButton.textContent = isDayMode ? "Night mode" : "Day mode";
+  themeIcon.src = isDayMode
+    ? "assets/icon/night.png"
+    : "assets/icon/day.png";
+
+  const label = isDayMode
+    ? "Switch to night mode"
+    : "Switch to day mode";
+
+  themeButton.setAttribute("aria-label", label);
+  themeButton.setAttribute("title", label);
   themeButton.setAttribute("aria-pressed", isDayMode);
 });
+
+const repeatButton = document.getElementById("repeat");
+let isRepeat = false;
+
+// Update looping and the repeat button state.
+function updateRepeat() {
+  genreAudio.loop = isRepeat;
+  atmosphereAudio.loop = isRepeat;
+  previewAudio.loop = false;
+
+  repeatButton.setAttribute("aria-pressed", isRepeat);
+  repeatButton.setAttribute(
+    "title",
+    isRepeat ? "Repeat on" : "Repeat off"
+  );
+}
+
+// Toggle repeat when the button is clicked.
+repeatButton.addEventListener("click", function () {
+  isRepeat = !isRepeat;
+  updateRepeat();
+});
+
+// Apply the starting state.
+updateRepeat();

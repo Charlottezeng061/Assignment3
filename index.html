@@ -14,9 +14,14 @@
   <main>
     <header class="page-header">
     <h1>Dynamic Reading Soundtrack</h1>
-    <button id="theme-toggle" type="button" aria-pressed="false">
-     Day mode
-   </button>
+<button
+  id="theme-toggle"
+  type="button"
+  aria-label="Switch to day mode"
+  aria-pressed="false"
+>
+  <img id="theme-icon" src="assets/icon/day.png" alt="">
+</button>
 </header>
 
     <div class="soundtrack">
@@ -44,23 +49,42 @@
         </div>
       </fieldset>
 
-      <div class="player-controls">
-        <div class="intensity-control">
-          <label for="intensity">
-            Intensity <span id="intensity-value">50%</span>
-          </label>
-          <input id="intensity" type="range" min="0" max="100" value="50">
-        </div>
-     
+<div class="player-controls">
+  <div class="intensity-control">
+    <label for="intensity" class="volume-label">
+      <img src="assets/icon/volume.png" alt="Volume">
+    </label>
 
-      <div class="controls">
-        <button id="play" type="button" aria-label="Play soundtrack">
-  <img id="play-icon" src="assets/icon/play.png" alt="">
-</button>
-        <button id="random">Random</button>
-        <button id="reset">Reset</button>
-      </div>
-      </div>
+    <input
+      id="intensity"
+      type="range"
+      min="0"
+      max="100"
+      value="50"
+    >
+
+    <span id="intensity-value">50%</span>
+  </div>
+
+  <button id="play" type="button" aria-label="Play soundtrack">
+    <img id="play-icon" src="assets/icon/play.png" alt="">
+  </button>
+
+  <div class="controls">
+    <button id="random">Random</button>
+    <button id="reset">Reset</button>
+
+    <button
+      id="repeat"
+      type="button"
+      aria-label="Repeat soundtrack"
+      aria-pressed="false"
+      title="Repeat off"
+    >
+      <img src="assets/icon/repeat.png" alt="">
+    </button>
+  </div>
+</div>
 
 <div class="playing-info">
   <p id="status" role="status">Ready to play</p>
