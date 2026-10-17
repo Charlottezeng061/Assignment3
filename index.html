@@ -9,9 +9,15 @@
   <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
 </head>
+
 <body>
   <main>
+    <header class="page-header">
     <h1>Dynamic Reading Soundtrack</h1>
+    <button id="theme-toggle" type="button" aria-pressed="false">
+     Day mode
+   </button>
+</header>
 
     <div class="soundtrack">
         <p class="interaction-note">
@@ -37,19 +43,26 @@
         </div>
       </fieldset>
 
-      <label for="intensity">
-        Intensity <span id="intensity-value">50%</span>
-      </label>
-      <input id="intensity" type="range" min="0" max="100" value="50">
+      <div class="player-controls">
+        <div class="intensity-control">
+          <label for="intensity">
+            Intensity <span id="intensity-value">50%</span>
+          </label>
+          <input id="intensity" type="range" min="0" max="100" value="50">
+        </div>
+     
 
       <div class="controls">
         <button id="play">Start</button>
         <button id="random">Random</button>
         <button id="reset">Reset</button>
       </div>
+      </div>
 
-      <p id="status">Now Playing</p>
-      <p id="now-playing">Fantasy + Calm</p>
+<div class="playing-info">
+  <p id="status" role="status">Ready to play</p>
+  <p id="now-playing">Fantasy + Calm</p>
+</div>
     </div>
   </main>
 </body>

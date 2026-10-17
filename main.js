@@ -382,3 +382,15 @@ previewAudio.addEventListener("ended", function () {
 loadSounds();
 updateDisplay();
 setIntensity();
+
+const themeButton = document.getElementById("theme-toggle");
+
+// Switch between day and night colours.
+// This does not change the audio or selected sounds.
+themeButton.addEventListener("click", function () {
+  const isDayMode = document.body.classList.toggle("day-mode");
+
+  // Show the mode the user can switch to next.
+  themeButton.textContent = isDayMode ? "Night mode" : "Day mode";
+  themeButton.setAttribute("aria-pressed", isDayMode);
+});
