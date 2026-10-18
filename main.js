@@ -17,7 +17,6 @@ genreAudio.loop = true;
 atmosphereAudio.loop = true;
 
 // Match each button name to its audio file prefix.
-// The short label describes the mood of the sound.
 const sounds = {
   Fantasy: { file: "fantasy", label: "Dreamlike" },
   Mystery: { file: "mystery", label: "Suspenseful" },
@@ -69,9 +68,8 @@ function loadSounds() {
   atmosphereAudio.src = audioPath("atmosphere", atmosphere);
 }
 
-// Update the sound names, selected buttons, and clip numbers.
 function updateDisplay() {
-  // Show the names without clip numbers in the player.
+  // Show the names in the player.
   nowPlaying.textContent = genre + " + " + atmosphere;
 
   document.querySelectorAll(".options button").forEach(function (button) {
@@ -112,7 +110,7 @@ function stopSounds() {
 
   isPlaying = false;
   playButton.disabled = false;
-  // Show the play icon when audio is paused.
+// Show the play icon when audio is paused.
 playIcon.src = "assets/icon/play.png";
 playButton.setAttribute("aria-label", "Play soundtrack");
 }
@@ -216,11 +214,10 @@ function setupButtons(groupId, type) {
     // Read the original button name before adding extra text.
     const name = button.textContent.trim();
 
-    // Store the name and group on the button.
     button.dataset.name = name;
     button.dataset.type = type;
 
-// Add the sound name, mood label, and clip counter.
+
  // Show the sound name and current clip number.
 button.innerHTML =
   '<strong class="sound-name">' + name + "</strong>" +
@@ -277,8 +274,7 @@ playButton.addEventListener("click", function () {
   }
 });
 
-// Convert the slider value from 0–100 to an audio volume from 0–1.
-// This starter version uses the same volume for all audio.
+// Convert the percentage to a volume value and apply it to all audio.
 function setIntensity() {
   const volume = Number(intensity.value) / 100;
 
@@ -321,7 +317,6 @@ document.getElementById("random").addEventListener("click", function () {
   // Update the clip counters and selected button states.
   updateDisplay();
 
-  // Tell the user that the new sounds are ready.
   statusText.textContent = "New sounds ready";
 
   // Play the new clips if the soundtrack was playing before.
@@ -430,5 +425,68 @@ repeatButton.addEventListener("click", function () {
   updateRepeat();
 });
 
-// Apply the starting state.
 updateRepeat();
+
+
+// Open and close the guide using the HTML dialog element.
+// Reference: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog
+
+// Use localStorage to remember whether the guide has been dismissed.
+// Reference: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+const guide = document.getElementById("guide");
+const guideOpen = document.getElementById("guide-open");
+const guideClose = document.getElementById("guide-close");
+const guideStart = document.getElementById("guide-start");
+
+// Pause audio before showing the guide.
+// Keep the selected sounds and volume unchanged.
+function openGuide() {
+  const wasPlaying = isPlaying;
+
+  stopSounds();
+
+  statusText.textContent = wasPlaying
+    ? "Paused"
+    : "Ready to play";
+
+  if (!guide.open) {
+    guide.showModal();
+  }
+}
+
+// Open the guide whenever the user needs help.
+guideOpen.addEventListener("click", openGuide);
+
+// Close the guide without starting playback.
+guideClose.addEventListener("click", function () {
+  guide.close();
+});
+
+guideStart.addEventListener("click", function () {
+  guide.close();
+});
+
+// Remember dismissal, including when Escape is used.
+guide.addEventListener("close", function () {
+  try {
+    localStorage.setItem("soundtrack-guide-seen", "true");
+  } catch {
+    // Continue normally if browser storage is unavailable.
+  }
+
+  guideOpen.focus();
+});
+
+// Show the guide automatically on the first visit.
+let hasSeenGuide = false;
+
+try {
+  hasSeenGuide =
+    localStorage.getItem("soundtrack-guide-seen") === "true";
+} catch {
+  // Show the guide if no saved preference can be read.
+}
+
+if (!hasSeenGuide) {
+  openGuide();
+}

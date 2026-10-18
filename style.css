@@ -432,3 +432,98 @@ body.day-mode #repeat[aria-pressed="false"] img {
 body.day-mode #repeat[aria-pressed="true"] img {
   filter: brightness(0) invert(1);
 }
+
+/* Keep help available above the sound choices. */
+#guide-open {
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  font-size: 13px;
+}
+
+/* Match the guide to the current theme. */
+#guide {
+  width: calc(100% - 32px);
+  max-width: 520px;
+  max-height: 85vh;
+  margin: auto;
+  padding: 28px;
+  overflow-y: auto;
+  background: var(--color1);
+  color: var(--color2);
+  border: 1px solid var(--color4);
+  border-radius: 24px;
+  font-family: var(--body-font);
+}
+
+#guide::backdrop {
+  background: rgb(0 0 0 / 60%);
+}
+
+.guide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+#guide-title {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-size: 28px;
+  font-weight: 400;
+}
+
+#guide-close {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+.guide-steps {
+  margin: 0;
+  padding-left: 24px;
+}
+
+.guide-steps li {
+  margin-bottom: 22px;
+  padding-left: 6px;
+}
+
+.guide-steps strong {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.guide-steps p,
+.guide-extra {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.guide-steps .guide-keyboard {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.guide-extra {
+  padding-top: 18px;
+  border-top: 1px solid var(--color3);
+}
+
+#guide-start {
+  width: 100%;
+  margin-top: 24px;
+  background: var(--color2);
+  color: var(--color1);
+}
+
+/* Show the arrow as a keyboard key. */
+.guide-keyboard kbd {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--color4);
+  border-radius: 4px;
+  font-family: var(--body-font);
+  font-size: 14px;
+}

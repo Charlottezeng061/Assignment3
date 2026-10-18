@@ -14,21 +14,23 @@
   <main>
     <header class="page-header">
     <h1>Dynamic Reading Soundtrack</h1>
-<button
-  id="theme-toggle"
-  type="button"
-  aria-label="Switch to day mode"
-  aria-pressed="false"
->
-  <img id="theme-icon" src="assets/icon/day.png" alt="">
+    <button
+     id="theme-toggle"
+     type="button"
+     aria-label="Switch to day mode"
+     aria-pressed="false"
+     >
+     <img id="theme-icon" src="assets/icon/day.png" alt="">
 </button>
+
 </header>
 
     <div class="soundtrack">
+      <button id="guide-open" type="button">How to use</button>
        <p class="interaction-note">
-  Click a sound to preview.
-  <strong>Double-click the same button to try its 4 sounds.</strong>
-</p>
+         Click a sound to preview.
+         <strong>Double-click the same button to try its 4 sounds.</strong>
+       </p>
       <fieldset>
         <legend>Genre</legend>
         <div class="options" id="genres">
@@ -92,5 +94,52 @@
 </div>
     </div>
   </main>
+  <dialog id="guide" aria-labelledby="guide-title">
+  <div class="guide-header">
+    <h2 id="guide-title">How to use</h2>
+
+    <button id="guide-close" type="button" aria-label="Close guide">
+      Close
+    </button>
+  </div>
+
+  <ol class="guide-steps">
+    <li>
+      <strong>Click to preview</strong>
+      <p>
+        Choose a genre and an atmosphere.
+        Click a button to hear a 6-second preview.
+      </p>
+    </li>
+
+    <li>
+      <strong>Double-click to change the sound</strong>
+      <p>
+        Each button contains 4 sounds.
+        Double-click the same button to try the next one.
+        “Sound 1 / 4” means the first of four sounds.
+      </p>
+       <p class="guide-keyboard">
+          With a sound button focused, press <kbd>→</kbd> to try the next sound.
+      </p>
+    </li>
+
+    <li>
+      <strong>Play your soundtrack</strong>
+      <p>
+        Press Play to hear both layers together.
+        Use the volume slider to adjust the sound level.
+      </p>
+    </li>
+  </ol>
+
+  <p class="guide-extra">
+  Random tries different sounds within your chosen genre and atmosphere.
+  Repeat keeps both sounds looping.
+  Reset restores the starting selections and volume.
+  </p>
+
+  <button id="guide-start" type="button" autofocus>Got it</button>
+</dialog>
 </body>
 </html>
