@@ -168,17 +168,18 @@ button.selected,
   font-weight: 500;
 }
 
-/* Place the clip number in the bottom-right corner. */
+/* Keep the sound number readable in both themes. */
 .sound-number {
   position: absolute;
   right: 14px;
-  bottom: 9px;
+  bottom: 10px;
   font-family: var(--body-font);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   line-height: 1;
   white-space: nowrap;
-  opacity: 0.65;
+  color: inherit;
+  opacity: 1;
 }
 
 button.previewing {
@@ -277,11 +278,22 @@ input[type="range"] {
   padding: 12px 18px;
 }
 
-/* Separate the sound names from the controls. */
+/* Show the current soundtrack above the sound choices. */
+.soundtrack-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--color3);
+}
+
 .playing-info {
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid var(--color3);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
 }
 
 #status {
@@ -296,6 +308,7 @@ input[type="range"] {
   font-size: 26px;
    font-weight: 500;
 }
+
 /* Limit both sections and keep space on each side. */
 .page-header,
 .soundtrack {
@@ -304,10 +317,6 @@ input[type="range"] {
   margin-left: auto;
   margin-right: auto;
 }
-
-
-
-
 
 /* Mobile layout */
 @media (max-width: 600px) {
@@ -433,17 +442,25 @@ body.day-mode #repeat[aria-pressed="true"] img {
   filter: brightness(0) invert(1);
 }
 
-/* Keep help available above the sound choices. */
+/* Keep help available as a small question-mark button. */
 #guide-open {
-  margin-bottom: 16px;
-  padding: 8px 16px;
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 22px;
+  flex-shrink: 0;
 }
 
 /* Match the guide to the current theme. */
 #guide {
   width: calc(100% - 32px);
-  max-width: 520px;
+  max-width: 460px;
   max-height: 85vh;
   margin: auto;
   padding: 28px;
@@ -464,14 +481,12 @@ body.day-mode #repeat[aria-pressed="true"] img {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
-#guide-title {
+#guide-progress {
   margin: 0;
-  font-family: var(--heading-font);
-  font-size: 28px;
-  font-weight: 400;
+  font-size: 13px;
 }
 
 #guide-close {
@@ -479,51 +494,33 @@ body.day-mode #repeat[aria-pressed="true"] img {
   font-size: 13px;
 }
 
-.guide-steps {
+.guide-content {
+  min-height: 180px;
+}
+
+#guide-title {
+  margin: 0 0 16px;
+  font-family: var(--heading-font);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+#guide-text {
   margin: 0;
-  padding-left: 24px;
+  font-size: 16px;
+  line-height: 1.7;
 }
 
-.guide-steps li {
-  margin-bottom: 22px;
-  padding-left: 6px;
-}
-
-.guide-steps strong {
-  font-size: 17px;
-  font-weight: 500;
-}
-
-.guide-steps p,
-.guide-extra {
-  margin: 6px 0 0;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.guide-steps .guide-keyboard {
-  margin-top: 10px;
-  font-size: 12px;
-}
-
-.guide-extra {
-  padding-top: 18px;
-  border-top: 1px solid var(--color3);
-}
-
-#guide-start {
-  width: 100%;
+.guide-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
   margin-top: 24px;
+}
+
+#guide-next {
+  min-width: 100px;
   background: var(--color2);
   color: var(--color1);
-}
-
-/* Show the arrow as a keyboard key. */
-.guide-keyboard kbd {
-  display: inline-block;
-  padding: 2px 8px;
-  border: 1px solid var(--color4);
-  border-radius: 4px;
-  font-family: var(--body-font);
-  font-size: 14px;
 }

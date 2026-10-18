@@ -366,8 +366,7 @@ document.getElementById("reset").addEventListener("click", function () {
 // The ended event fires when the preview reaches the end of its file.
 // This handles clips that finish before the six-second timer.
 // Pausing a preview does not fire this event.
-// Reference:
-// https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/ended_event
+// Reference: https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/ended_event
 previewAudio.addEventListener("ended", function () {
   // Clear the preview timer and remove the preview outline.
   stopSounds();
@@ -428,63 +427,105 @@ repeatButton.addEventListener("click", function () {
 updateRepeat();
 
 
-// Open and close the guide using the HTML dialog element.
+// Show one guide step at a time.
 // Reference: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog
-
-// Use localStorage to remember whether the guide has been dismissed.
-// Reference: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
 const guide = document.getElementById("guide");
 const guideOpen = document.getElementById("guide-open");
 const guideClose = document.getElementById("guide-close");
-const guideStart = document.getElementById("guide-start");
+const guideBack = document.getElementById("guide-back");
+const guideNext = document.getElementById("guide-next");
+const guideTitle = document.getElementById("guide-title");
+const guideText = document.getElementById("guide-text");
+const guideProgress = document.getElementById("guide-progress");
 
-// Pause audio before showing the guide.
-// Keep the selected sounds and volume unchanged.
+const guideSteps = [
+  {
+    title: "Choose your sounds",
+    text: "Choose a genre and an atmosphere. Click a button to hear a 6-second preview."
+  },
+  {
+    title: "Try another sound",
+    text: "Each button has 4 sounds. Double-click to try the next one. “Sound 1 / 4” means sound 1 of 4. With a button focused, you can also press →."
+  },
+  {
+    title: "Start reading",
+    text: "Press Play to hear both layers and adjust the volume. Random tries new sounds in your chosen categories. Repeat keeps them looping."
+  }
+];
+
+let guideStep = 0;
+
+// Update the text and navigation for the current step.
+function updateGuide() {
+  guideTitle.textContent = guideSteps[guideStep].title;
+  guideText.textContent = guideSteps[guideStep].text;
+
+  guideProgress.textContent =
+    "Step " + (guideStep + 1) + " of " + guideSteps.length;
+
+  guideBack.disabled = guideStep === 0;
+
+  guideNext.textContent =
+    guideStep === guideSteps.length - 1 ? "Got it" : "Next";
+}
+
+// Pause audio and start the guide from step 1.
 function openGuide() {
   const wasPlaying = isPlaying;
 
   stopSounds();
+  statusText.textContent = wasPlaying ? "Paused" : "Ready to play";
 
-  statusText.textContent = wasPlaying
-    ? "Paused"
-    : "Ready to play";
+  guideStep = 0;
+  updateGuide();
 
   if (!guide.open) {
     guide.showModal();
   }
 }
 
-// Open the guide whenever the user needs help.
 guideOpen.addEventListener("click", openGuide);
 
-// Close the guide without starting playback.
+guideBack.addEventListener("click", function () {
+  if (guideStep > 0) {
+    guideStep--;
+    updateGuide();
+  }
+});
+
+guideNext.addEventListener("click", function () {
+  if (guideStep < guideSteps.length - 1) {
+    guideStep++;
+    updateGuide();
+  } else {
+    guide.close();
+  }
+});
+
 guideClose.addEventListener("click", function () {
   guide.close();
 });
 
-guideStart.addEventListener("click", function () {
-  guide.close();
-});
-
-// Remember dismissal, including when Escape is used.
+// Remember dismissal and return focus to the help button.
+// Reference: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
 guide.addEventListener("close", function () {
   try {
-    localStorage.setItem("soundtrack-guide-seen", "true");
+    localStorage.setItem("soundtrack-guide-v2-seen", "true");
   } catch {
-    // Continue normally if browser storage is unavailable.
+    // The guide still works without browser storage.
   }
 
   guideOpen.focus();
 });
 
-// Show the guide automatically on the first visit.
+// Show this updated guide once on the first visit.
 let hasSeenGuide = false;
 
 try {
   hasSeenGuide =
-    localStorage.getItem("soundtrack-guide-seen") === "true";
+    localStorage.getItem("soundtrack-guide-v2-seen") === "true";
 } catch {
-  // Show the guide if no saved preference can be read.
+  // Show the guide if saved preferences cannot be read.
 }
 
 if (!hasSeenGuide) {
