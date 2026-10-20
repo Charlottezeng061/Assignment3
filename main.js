@@ -331,6 +331,10 @@ document.getElementById("reset").addEventListener("click", function () {
   // Pause all audio and clear the preview and click timers.
   stopSounds();
 
+  // Reset repeat to its starting state.
+  isRepeat = false;
+  updateRepeat();
+
   // Restore the default genre and atmosphere.
   genre = "Fantasy";
   atmosphere = "Calm";
@@ -531,3 +535,18 @@ try {
 if (!hasSeenGuide) {
   openGuide();
 }
+
+// Update the player after both soundtrack layers finish.
+function checkTrackEnd() {
+  if (
+    isPlaying &&
+    genreAudio.ended &&
+    atmosphereAudio.ended
+  ) {
+    stopSounds();
+    statusText.textContent = "Finished";
+  }
+}
+
+genreAudio.addEventListener("ended", checkTrackEnd);
+atmosphereAudio.addEventListener("ended", checkTrackEnd);
