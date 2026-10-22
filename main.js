@@ -97,14 +97,14 @@ nostalgic4.mp3 — OldClock.wav
 https://freesound.org/s/464747/
 */
 const sounds = {
-  Fantasy: { file: "fantasy", label: "Dreamlike" },
-  Mystery: { file: "mystery", label: "Suspenseful" },
-  Romance: { file: "romance", label: "Tender" },
-  "Sci-Fi": { file: "sci-fi", label: "Otherworldly" },
-  Calm: { file: "calm", label: "Quiet" },
-  Dark: { file: "dark", label: "Shadowy" },
-  Magical: { file: "magical", label: "Enchanted" },
-  Nostalgic: { file: "nostalgic", label: "Reflective" }
+  Fantasy: { file: "fantasy" },
+  Mystery: { file: "mystery" },
+  Romance: { file: "romance" },
+  "Sci-Fi": { file: "sci-fi" },
+  Calm: { file: "calm" },
+  Dark: { file: "dark" },
+  Magical: { file: "magical" },
+  Nostalgic: { file: "nostalgic" }
 };
 
 // Set the starting selections and playback state.
@@ -440,10 +440,7 @@ document.getElementById("random").addEventListener("click", function () {
   // Pause the soundtrack and any preview before changing files.
   stopSounds();
 
-  // Pick a different clip within each selected label.
-  // For example, clips[genre] means clips["Fantasy"] when Fantasy is the selected genre.
-  // genre and atmosphere stay unchanged, so the buttons do not change.
-  // randomClip() uses Math.random() to choose another clip.
+// Change recordings without changing the selected categories.
   clips[genre] = randomClip(clips[genre]);
   clips[atmosphere] = randomClip(clips[atmosphere]);
 
@@ -625,18 +622,3 @@ guideClose.addEventListener("click", function () {
 
 // Show the guide every time the page loads.
 openGuide();
-
-// Update the player after both soundtrack layers finish.
-function checkTrackEnd() {
-  if (
-    isPlaying &&
-    genreAudio.ended &&
-    atmosphereAudio.ended
-  ) {
-    stopSounds();
-    statusText.textContent = "Finished";
-  }
-}
-
-genreAudio.addEventListener("ended", checkTrackEnd);
-atmosphereAudio.addEventListener("ended", checkTrackEnd);

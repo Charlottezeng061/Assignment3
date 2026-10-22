@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@400&family=Outfit:wght@400;500&display=swap");
 
-/* Colours and fonts */
+/* Colors and fonts */
 :root {
   --color1: #3f2e11;
   --color2: #dfd4b8;
@@ -142,14 +142,6 @@ body.day-mode .icon-button img {
   border-radius: 24px;
 }
 
-.interaction-note {
-  margin: 0 0 24px;
-  font-family: var(--body-font);
-  font-size: 15px;
-  line-height: 1.5;
-  opacity: 0.7;
-}
-
 fieldset {
   min-width: 0;
   border: none;
@@ -258,13 +250,7 @@ button:disabled {
   cursor: wait;
 }
 
-/* Intensity slider */
-#intensity-value {
-  font-family: var(--body-font);
-  font-size: 14px;
-}
-
-/* Keep Play centred between two equal columns. */
+/* Align the volume controls on the right. */
 .player-controls {
   display: flex;
   flex-direction: column;
@@ -286,13 +272,6 @@ button:disabled {
   min-width: 0;
 }
 
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-wrap: nowrap;
-  gap: 8px;
-}
 .volume-label {
   display: flex;
   align-items: center;
@@ -331,10 +310,6 @@ input[type="range"] {
   margin: 14px 0 0;
   accent-color: var(--color2);
   cursor: pointer;
-}
-
-.controls button {
-  padding: 12px 18px;
 }
 
 /* Keep three player areas balanced. */
@@ -422,10 +397,6 @@ main {
 
 .player-controls {
   align-items: center;
-}
-
-.controls {
-  justify-content: center;
 }
 
 h1 {
@@ -534,7 +505,7 @@ body.day-mode #play-icon {
   color: var(--color1);
 }
 
-/* Show examples of the player icons. */
+/* Show examples of icons on guide page. */
 .guide-icon {
   display: inline-flex;
   align-items: center;
