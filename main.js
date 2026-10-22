@@ -16,7 +16,85 @@ const previewAudio = new Audio();
 genreAudio.loop = true;
 atmosphereAudio.loop = true;
 
-// Match each button name to its audio file prefix.
+/*
+Audio credits — Freesound
+
+Genre files: assets/audio/genre/
+
+fantasy1.mp3 — Enchanted Lobby Loop
+https://freesound.org/s/731511/
+fantasy2.mp3 — Medieval Lute Chords
+https://freesound.org/s/506266/
+fantasy3.mp3 — Fantasy Ambience
+https://freesound.org/s/277297/
+fantasy4.mp3 — Final Phantomsee
+https://freesound.org/s/807750/
+
+mystery1.mp3 — Mysterious ambience
+https://freesound.org/s/728725/
+mystery2.mp3 — Suspense Strings
+https://freesound.org/s/583732/
+mystery3.mp3 — Atmosphere 2
+https://freesound.org/s/384584/
+mystery4.mp3 — Bright And Mystery
+https://freesound.org/s/669503/
+
+romance1.mp3 — Free Cinematic Emotional Piano
+https://freesound.org/s/668907/
+romance2.mp3 — Contemplative String Loop
+https://freesound.org/s/839571/
+romance3.mp3 — Lofi Loop 2023
+https://freesound.org/s/673525/
+romance4.mp3 — Murmuring Strings
+https://freesound.org/s/847418/
+
+sci-fi1.mp3 — Atmosphere_Scifi_Bunker_Loop_Stereo
+https://freesound.org/s/817225/
+sci-fi2.mp3 — Building Synth [Loop]
+https://freesound.org/s/703050/
+sci-fi3.mp3 — Sci-fi Ambient Drone
+https://freesound.org/s/534018/
+sci-fi4.mp3 — Sci-fi Space Traveling Ambient Suit
+https://freesound.org/s/726484/
+
+Atmosphere files: assets/audio/atmosphere/
+
+calm1.mp3 — Rain_Ambience.WAV
+https://freesound.org/s/704579/
+calm2.mp3 — Ambience: Quiet Windy Forest
+https://freesound.org/s/479430/
+calm3.mp3 — Ocean Waves
+https://freesound.org/s/531015/
+calm4.mp3 — Fireplace Fire Crackling
+https://freesound.org/s/717579/
+
+dark1.mp3 — Dark Drone Ambient
+https://freesound.org/s/500326/
+dark2.mp3 — Dark Wind
+https://freesound.org/s/440962/
+dark3.mp3 — Dark Drone
+https://freesound.org/s/728465/
+dark4.mp3 — Cave Ambience Loop
+https://freesound.org/s/770379/
+
+magical1.mp3 — Luminis
+https://freesound.org/s/722399/
+magical2.mp3 — Magic - Chimes
+https://freesound.org/s/753334/
+magical3.mp3 — Magic - Cymbal Swell
+https://freesound.org/s/826130/
+magical4.mp3 — Recuperatio
+https://freesound.org/s/722381/
+
+nostalgic1.mp3 — Lofi E-Piano Loop 95 BPM
+https://freesound.org/s/629167/
+nostalgic2.mp3 — Memories - Nostalgic Simple Piano Melody
+https://freesound.org/s/827125/
+nostalgic3.mp3 — Brahms Lullaby Music Box
+https://freesound.org/s/416384/
+nostalgic4.mp3 — OldClock.wav
+https://freesound.org/s/464747/
+*/
 const sounds = {
   Fantasy: { file: "fantasy", label: "Dreamlike" },
   Mystery: { file: "mystery", label: "Suspenseful" },
@@ -86,8 +164,17 @@ function updateDisplay() {
     button.setAttribute("aria-pressed", selected);
 
     // Show the current clip number inside the button.
-    button.querySelector(".sound-number").textContent =
-        "Sound " + clips[name] + " / 4";
+// Highlight the button when its sound number changes.
+const counter = button.querySelector(".sound-number");
+const nextText = "Sound " + clips[name] + " / 4";
+
+if (counter.textContent !== nextText) {
+  counter.textContent = nextText;
+
+  button.classList.remove("sound-changed");
+  void button.offsetWidth;
+  button.classList.add("sound-changed");
+}
   });
 }
 
@@ -324,47 +411,6 @@ document.getElementById("random").addEventListener("click", function () {
   if (wasPlaying) {
     startSounds();
   }
-});
-
-// Restore the starting selections and settings when Reset is clicked.
-document.getElementById("reset").addEventListener("click", function () {
-  // Pause all audio and clear the preview and click timers.
-  stopSounds();
-
-  // Reset repeat to its starting state.
-  isRepeat = false;
-  updateRepeat();
-
-  // Restore the default genre and atmosphere.
-  genre = "Fantasy";
-  atmosphere = "Calm";
-
-  // Object.keys() creates an array of all label names in clips.
-  // forEach() goes through each name and resets its clip number to 1.
-  // This resets all eight labels, including unselected ones.
-  // References:
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
-  Object.keys(clips).forEach(function (name) {
-    clips[name] = 1;
-  });
-
-  // Return the slider to its starting value.
-  intensity.value = 50;
-
-  // Update the audio volume and percentage text.
-  // Changing the slider value in code does not fire an input event,
-  // so setIntensity() must be called here.
-  setIntensity();
-
-  // Load the default clips from the beginning.
-  loadSounds();
-
-  // Update the selected buttons, clip counters, and sound names.
-  updateDisplay();
-
-  // Reset prepares the soundtrack but does not play it.
-  statusText.textContent = "Ready to play";
 });
 
 // The ended event fires when the preview reaches the end of its file.

@@ -14,6 +14,17 @@
   <main>
     <header class="page-header">
     <h1>Dynamic Reading Soundtrack</h1>
+
+      <div class="header-actions">
+    <button
+      id="guide-open"
+      type="button"
+      aria-label="How to use"
+      title="How to use"
+    >
+      <span aria-hidden="true">?</span>
+    </button>
+
     <button
      id="theme-toggle"
      type="button"
@@ -22,6 +33,7 @@
      >
      <img id="theme-icon" src="assets/icon/day.png" alt="">
 </button>
+  </div>
 </header>
 
 <div class="soundtrack">
@@ -31,15 +43,51 @@
     <p id="now-playing">Fantasy + Calm</p>
   </div>
 
+  <div class="playback-buttons">
   <button
-    id="guide-open"
-    type="button"
-    aria-label="How to use"
-    title="How to use"
-  >
-    <span aria-hidden="true">?</span>
+      id="random"
+      class="icon-button"
+      type="button"
+      aria-label="Random sounds"
+      title="Random sounds"
+    >
+    <img src="assets/icon/random.png" alt="">
   </button>
-</div>
+
+<button id="play" type="button" aria-label="Play soundtrack">
+        <img id="play-icon" src="assets/icon/play.png" alt="">
+      </button>
+
+  <button
+      id="repeat"
+      class="icon-button"
+      type="button"
+      aria-label="Repeat soundtrack"
+      aria-pressed="false"
+      title="Repeat off"
+    >
+    <img src="assets/icon/repeat.png" alt="">
+  </button>
+  </div>
+
+  <div class="player-controls">
+      <div class="intensity-control">
+      <label for="intensity" class="volume-label">
+        <img src="assets/icon/volume.png" alt="Volume">
+      </label>
+      <input
+        id="intensity"
+        type="range"
+        min="0"
+        max="100"
+        value="50"
+      >
+
+      <span id="intensity-value">50%</span>
+    </div>
+    </div>
+  </div>
+
       <fieldset>
         <legend>Genre</legend>
         <div class="options" id="genres">
@@ -59,43 +107,6 @@
           <button>Nostalgic</button>
         </div>
       </fieldset>
-
-<div class="player-controls">
-  <div class="intensity-control">
-    <label for="intensity" class="volume-label">
-      <img src="assets/icon/volume.png" alt="Volume">
-    </label>
-
-    <input
-      id="intensity"
-      type="range"
-      min="0"
-      max="100"
-      value="50"
-    >
-
-    <span id="intensity-value">50%</span>
-  </div>
-
-  <button id="play" type="button" aria-label="Play soundtrack">
-    <img id="play-icon" src="assets/icon/play.png" alt="">
-  </button>
-
-  <div class="controls">
-    <button id="random">Random</button>
-    <button id="reset">Reset</button>
-
-    <button
-      id="repeat"
-      type="button"
-      aria-label="Repeat soundtrack"
-      aria-pressed="false"
-      title="Repeat off"
-    >
-      <img src="assets/icon/repeat.png" alt="">
-    </button>
-  </div>
-</div>
 </div>
 </main>
 

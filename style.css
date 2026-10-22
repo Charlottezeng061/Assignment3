@@ -62,17 +62,26 @@ h1 {
   margin: 0;
 }
 
-#theme-toggle {
+#theme-toggle,
+#guide-open {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  min-height: 48px;
-  padding: 10px;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--color4);
   border-radius: 50%;
   flex-shrink: 0;
-  margin-right: 28px;
+  font-size: 22px;
+}
+
+/* Highlight the border on hover. */
+#theme-toggle:hover,
+#guide-open:hover {
+  border-color: var(--color2);
 }
 
 /* Show a white icon on the dark background. */
@@ -86,6 +95,42 @@ h1 {
 
 /* Show a black icon on the light background. */
 body.day-mode #theme-icon {
+  filter: brightness(0);
+}
+
+/* Group Random, Play and Repeat. */
+.playback-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Supporting icon buttons */
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 10px;
+  border: 1px solid var(--color4);
+  border-radius: 50%;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.icon-button img {
+  display: block;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+body.day-mode .icon-button img {
   filter: brightness(0);
 }
 
@@ -168,18 +213,33 @@ button.selected,
   font-weight: 500;
 }
 
-/* Keep the sound number readable in both themes. */
+/* Show the current sound clearly. */
 .sound-number {
   position: absolute;
   right: 14px;
   bottom: 10px;
   font-family: var(--body-font);
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
   white-space: nowrap;
   color: inherit;
   opacity: 1;
+}
+
+/* Briefly change the counter colour. */
+.sound-changed .sound-number {
+  animation: sound-change 0.8s;
+}
+
+@keyframes sound-change {
+  0%, 40% {
+    color: #6e845f;
+  }
+
+  100% {
+    color: inherit;
+  }
 }
 
 button.previewing {
@@ -206,15 +266,14 @@ button:disabled {
 
 /* Keep Play centred between two equal columns. */
 .player-controls {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 56px minmax(0, 1fr);
-  align-items: center;
-  gap: 24px;
-  margin-top: 12px;
-}
-
-.player-controls > #play {
-  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  width: 32%;
 }
 
 /* Keep the volume controls in one row. */
@@ -231,7 +290,7 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
 }
 .volume-label {
@@ -278,14 +337,14 @@ input[type="range"] {
   padding: 12px 18px;
 }
 
-/* Show the current soundtrack above the sound choices. */
+/* Keep three player areas balanced. */
 .soundtrack-top {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding-bottom: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
   border-bottom: 1px solid var(--color3);
 }
 
@@ -294,6 +353,7 @@ input[type="range"] {
   margin: 0;
   padding: 0;
   border: none;
+  width: 32%;
 }
 
 #status {
@@ -318,6 +378,14 @@ input[type="range"] {
   margin-right: auto;
 }
 
+/* Group help and theme controls. */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
 /* Mobile layout */
 @media (max-width: 600px) {
 main {
@@ -332,34 +400,33 @@ main {
   margin-top: 0;
 }
 
-/* Stack the controls only on small screens. */
+.soundtrack-top {
+  flex-direction: column;
+  gap: 24px;
+}
+
+.playing-info,
 .player-controls {
-  grid-template-columns: 1fr;
-  gap: 20px;
+  width: 100%;
 }
 
-.player-controls > #play {
-  grid-row: 1;
-}
-
-.intensity-control {
-  grid-row: 2;
-  justify-self: center;
+.player-controls {
+  align-items: center;
 }
 
 .controls {
-  grid-row: 3;
   justify-content: center;
 }
-  h1 {
+
+h1 {
     font-size: 32px;
   }
 
-  .soundtrack {
+.soundtrack {
     padding: 20px;
   }
 
-  .options {
+.options {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -387,10 +454,6 @@ main {
 /* Use a light icon on the dark button in day mode. */
 body.day-mode #play-icon {
   filter: brightness(0) invert(1);
-}
-
-#theme-toggle {
-  margin-right: 0;
 }
 
 /* Keep the repeat icon centred. */
@@ -442,20 +505,6 @@ body.day-mode #repeat[aria-pressed="true"] img {
   filter: brightness(0) invert(1);
 }
 
-/* Keep help available as a small question-mark button. */
-#guide-open {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  min-height: 44px;
-  margin: 0;
-  padding: 0;
-  border-radius: 50%;
-  font-size: 22px;
-  flex-shrink: 0;
-}
 
 /* Match the guide to the current theme. */
 #guide {
