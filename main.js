@@ -623,11 +623,6 @@ guideClose.addEventListener("click", function () {
   guide.close();
 });
 
-// Return focus to the help button after closing.
-guide.addEventListener("close", function () {
-  guideOpen.focus();
-});
-
 // Show the guide every time the page loads.
 openGuide();
 
