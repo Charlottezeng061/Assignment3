@@ -543,7 +543,7 @@ const guideSteps = [
   },
   {
     title: "Try another sound",
-    text: "Each button has 4 sounds. Double-click to try the next one. “Sound 1 / 4” means sound 1 of 4. With a button focused, you can also press →."
+    text: "Each button has 4 sounds. Double-click to hear the next one. “Sound 1 / 4” shows your current sound. You can also select a button and press →."
   },
   {
   title: "Start reading",
@@ -564,6 +564,8 @@ const guideSteps = [
       <img src="assets/icon/reset.png" alt="Reset">
     </span>
     Restore your sounds, volume and focus time.
+     <br><br>
+    Focus time counts while your soundtrack plays and pauses with it.
   `
 }
 ];
