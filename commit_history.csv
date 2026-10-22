@@ -1,0 +1,20 @@
+Charlotte061,Thu Oct 22 16:01:15 2026 +1100,Update main.js,
+Charlotte061,Thu Oct 22 15:47:24 2026 +1100,update guide description,
+Charlotte061,Thu Oct 22 15:39:18 2026 +1100,Add focus timer and simplify playback controls,Loop soundtrack layers automatically, replace repeat with reset; add playback icon examples to the guide making it more readable.
+
+Charlotte061,Thu Oct 22 15:17:46 2026 +1100,Refine player layout and sound feedback,Move playback controls above the sound selections to make the reading experience better; remove the Reset button; move guide beside the theme toggle; enlarge sound counters and highlight clip changes
+
+Charlotte061,Thu Oct 22 14:31:14 2026 +1100,update guide function,show the guide every time the page loads
+
+Charlotte061,Thu Oct 22 14:25:30 2026 +1100,use showModal to show the dialog,
+Charlotte061,Tue Oct 20 16:33:49 2026 +1100,Reset Repeat to off when Reset is clicked,Restore the play icon when both audio tracks finish
+
+Charlotte061,Sun Oct 18 22:10:32 2026 +1100,updated layout and function based on feedback,
+Charlotte061,Sun Oct 18 18:42:33 2026 +1100,add guide box to help users know how to use the website,update night icon to a more simple one
+
+Charlotte061,Sat Oct 17 23:07:35 2026 +1100,replace day/night mode and intensity to icons,add repeat button
+
+Charlotte061,Sat Oct 17 21:32:30 2026 +1100,Improve playback controls and sound labels,Clarify clip counters with “Sound 1 / 4” labels, replace Start/Pause text with icons
+
+Charlotte061,Sat Oct 17 18:56:41 2026 +1100,Refine layout and add day/night mod,
+Charlotte061,Wed Oct 14 02:53:22 2026 +1100,Build the initial soundtrack interface and core features,I add single-click previews and double-click sound switching to make the interface simple and easy to use, and replace the sounds label with clip counters.
