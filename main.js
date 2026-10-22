@@ -441,6 +441,7 @@ const guideNext = document.getElementById("guide-next");
 const guideTitle = document.getElementById("guide-title");
 const guideText = document.getElementById("guide-text");
 const guideProgress = document.getElementById("guide-progress");
+guide.showModal();
 
 const guideSteps = [
   {
