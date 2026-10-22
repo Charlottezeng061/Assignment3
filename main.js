@@ -441,7 +441,6 @@ const guideNext = document.getElementById("guide-next");
 const guideTitle = document.getElementById("guide-title");
 const guideText = document.getElementById("guide-text");
 const guideProgress = document.getElementById("guide-progress");
-guide.showModal();
 
 const guideSteps = [
   {
@@ -511,31 +510,13 @@ guideClose.addEventListener("click", function () {
   guide.close();
 });
 
-// Remember dismissal and return focus to the help button.
-// Reference: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+// Return focus to the help button after closing.
 guide.addEventListener("close", function () {
-  try {
-    localStorage.setItem("soundtrack-guide-v2-seen", "true");
-  } catch {
-    // The guide still works without browser storage.
-  }
-
   guideOpen.focus();
 });
 
-// Show this updated guide once on the first visit.
-let hasSeenGuide = false;
-
-try {
-  hasSeenGuide =
-    localStorage.getItem("soundtrack-guide-v2-seen") === "true";
-} catch {
-  // Show the guide if saved preferences cannot be read.
-}
-
-if (!hasSeenGuide) {
-  openGuide();
-}
+// Show the guide every time the page loads.
+openGuide();
 
 // Update the player after both soundtrack layers finish.
 function checkTrackEnd() {
