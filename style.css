@@ -98,7 +98,7 @@ body.day-mode #theme-icon {
   filter: brightness(0);
 }
 
-/* Group Random, Play and Repeat. */
+/* Group Random, Play and Reset. */
 .playback-buttons {
   display: flex;
   align-items: center;
@@ -369,6 +369,16 @@ input[type="range"] {
    font-weight: 500;
 }
 
+/* Show the listening time. */
+#focus-time {
+  margin: 8px 0 0;
+  font-family: var(--body-font);
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.8;
+  font-variant-numeric: tabular-nums;
+}
+
 /* Limit both sections and keep space on each side. */
 .page-header,
 .soundtrack {
@@ -456,56 +466,6 @@ body.day-mode #play-icon {
   filter: brightness(0) invert(1);
 }
 
-/* Keep the repeat icon centred. */
-#repeat {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  padding: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-#repeat img {
-  display: block;
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-}
-
-/* Repeat off: transparent background and light icon. */
-#repeat[aria-pressed="false"] {
-  background: transparent;
-  color: var(--color2);
-}
-
-#repeat[aria-pressed="false"] img {
-  filter: brightness(0) invert(1);
-}
-
-/* Repeat on: filled background and dark icon. */
-#repeat[aria-pressed="true"] {
-  background: var(--color2);
-  color: var(--color1);
-}
-
-#repeat[aria-pressed="true"] img {
-  filter: brightness(0);
-}
-
-/* Reverse icon colours in day mode. */
-body.day-mode #repeat[aria-pressed="false"] img {
-  filter: brightness(0);
-}
-
-body.day-mode #repeat[aria-pressed="true"] img {
-  filter: brightness(0) invert(1);
-}
-
-
 /* Match the guide to the current theme. */
 #guide {
   width: calc(100% - 32px);
@@ -572,4 +532,28 @@ body.day-mode #repeat[aria-pressed="true"] img {
   min-width: 100px;
   background: var(--color2);
   color: var(--color1);
+}
+
+/* Show examples of the player icons. */
+.guide-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-right: 8px;
+  border: 1px solid var(--color4);
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.guide-icon img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+body.day-mode .guide-icon img {
+  filter: brightness(0);
 }

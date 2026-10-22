@@ -15,6 +15,7 @@ const previewAudio = new Audio();
 // The preview does not loop.
 genreAudio.loop = true;
 atmosphereAudio.loop = true;
+previewAudio.loop = false;
 
 /*
 Audio credits — Freesound
@@ -111,6 +112,49 @@ let genre = "Fantasy";
 let atmosphere = "Calm";
 let isPlaying = false;
 
+// Track time only while the soundtrack is playing.
+const focusTime = document.getElementById("focus-time");
+
+let focusElapsed = 0;
+let focusStarted = null;
+let focusTimer;
+
+function updateFocusTime() {
+  let elapsed = focusElapsed;
+
+  if (focusStarted !== null) {
+    elapsed += performance.now() - focusStarted;
+  }
+
+  const totalSeconds = Math.floor(elapsed / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  focusTime.textContent =
+    "Focus time " +
+    String(minutes).padStart(2, "0") +
+    ":" +
+    String(seconds).padStart(2, "0");
+}
+
+function startFocusTime() {
+  if (focusStarted !== null) return;
+
+  focusStarted = performance.now();
+  focusTimer = setInterval(updateFocusTime, 1000);
+  updateFocusTime();
+}
+
+function pauseFocusTime() {
+  if (focusStarted !== null) {
+    focusElapsed += performance.now() - focusStarted;
+    focusStarted = null;
+  }
+
+  clearInterval(focusTimer);
+  updateFocusTime();
+}
+
 // Use a request number to ignore old playback requests.
 // This helps when the user changes sounds before loading finishes.
 let request = 0;
@@ -181,6 +225,7 @@ if (counter.textContent !== nextText) {
 // Pause all audio and clear any pending timers.
 // Playback positions are kept so the soundtrack can resume.
 function stopSounds() {
+  pauseFocusTime();
   request++;
 
   clearTimeout(clickTimer);
@@ -223,11 +268,14 @@ async function startSounds() {
     if (currentRequest !== request) return;
 
     isPlaying = true;
+    startFocusTime();
+
     // Show the pause icon while audio is playing.
-playIcon.src = "assets/icon/pause.png";
-playButton.setAttribute("aria-label", "Pause soundtrack");
+    playIcon.src = "assets/icon/pause.png";
+    playButton.setAttribute("aria-label", "Pause soundtrack");
     statusText.textContent = "Now Playing";
   } catch {
+
     // Show an error only if this is still the current request.
     if (currentRequest !== request) return;
 
@@ -235,6 +283,7 @@ playButton.setAttribute("aria-label", "Pause soundtrack");
     statusText.textContent =
       "Could not play audio. Check your files.";
   } finally {
+
     // Enable the button after the current loading request finishes.
     if (currentRequest === request) {
       playButton.disabled = false;
@@ -413,6 +462,29 @@ document.getElementById("random").addEventListener("click", function () {
   }
 });
 
+// Restore the starting sounds, volume and focus time.
+document.getElementById("reset").addEventListener("click", function () {
+  stopSounds();
+
+  genre = "Fantasy";
+  atmosphere = "Calm";
+
+  Object.keys(clips).forEach(function (name) {
+    clips[name] = 1;
+  });
+
+  intensity.value = 50;
+  setIntensity();
+
+  focusElapsed = 0;
+  updateFocusTime();
+
+  loadSounds();
+  updateDisplay();
+
+  statusText.textContent = "Ready to play";
+});
+
 // The ended event fires when the preview reaches the end of its file.
 // This handles clips that finish before the six-second timer.
 // Pausing a preview does not fire this event.
@@ -452,30 +524,6 @@ themeButton.addEventListener("click", function () {
   themeButton.setAttribute("aria-pressed", isDayMode);
 });
 
-const repeatButton = document.getElementById("repeat");
-let isRepeat = false;
-
-// Update looping and the repeat button state.
-function updateRepeat() {
-  genreAudio.loop = isRepeat;
-  atmosphereAudio.loop = isRepeat;
-  previewAudio.loop = false;
-
-  repeatButton.setAttribute("aria-pressed", isRepeat);
-  repeatButton.setAttribute(
-    "title",
-    isRepeat ? "Repeat on" : "Repeat off"
-  );
-}
-
-// Toggle repeat when the button is clicked.
-repeatButton.addEventListener("click", function () {
-  isRepeat = !isRepeat;
-  updateRepeat();
-});
-
-updateRepeat();
-
 
 // Show one guide step at a time.
 // Reference: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog
@@ -498,9 +546,26 @@ const guideSteps = [
     text: "Each button has 4 sounds. Double-click to try the next one. “Sound 1 / 4” means sound 1 of 4. With a button focused, you can also press →."
   },
   {
-    title: "Start reading",
-    text: "Press Play to hear both layers and adjust the volume. Random tries new sounds in your chosen categories. Repeat keeps them looping."
-  }
+  title: "Start reading",
+  text: `
+    <span class="guide-icon">
+      <img src="assets/icon/play.png" alt="Play">
+    </span>
+    Play both layers. Sounds loop automatically.
+    <br><br>
+
+    <span class="guide-icon">
+      <img src="assets/icon/random.png" alt="Random">
+    </span>
+    Try new sounds in your chosen categories.
+    <br><br>
+
+    <span class="guide-icon">
+      <img src="assets/icon/reset.png" alt="Reset">
+    </span>
+    Restore your sounds, volume and focus time.
+  `
+}
 ];
 
 let guideStep = 0;
@@ -508,7 +573,7 @@ let guideStep = 0;
 // Update the text and navigation for the current step.
 function updateGuide() {
   guideTitle.textContent = guideSteps[guideStep].title;
-  guideText.textContent = guideSteps[guideStep].text;
+  guideText.innerHTML = guideSteps[guideStep].text;
 
   guideProgress.textContent =
     "Step " + (guideStep + 1) + " of " + guideSteps.length;
